@@ -8,7 +8,7 @@ FROM debian:sid-20211220
 # Set image locale.
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
-ENV TZ=Europe/Warsaw
+ENV TZ=America/Sao_Paulo
 
 # Expose some ports to host by default.
 EXPOSE 8080 8081 8082 8083 8084 8085
@@ -39,7 +39,11 @@ ARG GIT_FLOW_DIR='gitflow-avh'
 # 11. npm for NodeJS.
 # 12. tzdata to set default container timezone.
 # 13. Everything needed to install Neovim from source.
-RUN apt-get update && apt-get -y install curl fzf ripgrep tree git xclip python3 python3-pip nodejs npm tzdata ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config zip unzip
+RUN apt-get update && apt-get -y install software-properties-common curl fzf ripgrep tree git xclip python3 python3-pip nodejs npm tzdata ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config zip unzip fontforge
+
+# Install Nvm.
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+RUN bash -l -c "source /root/.nvm/nvm.sh && nvm install --lts"
 
 # Cooperate Neovim with Python 3.
 RUN pip3 install pynvim
@@ -76,6 +80,18 @@ RUN mkdir -p /root/.config/coc/extensions
 
 # Install Neovim COC extensions.
 RUN cd /root/.config/coc/extensions && npm install $COC --global --only=prod
+
+# Install Typescript SDK.
+RUN apt-get update && apt-get -y install watchman && npm install -g typescript
+
+# Install Ack and ag.
+RUN apt-get update && apt-get -y install ack
+
+# Install Node.js debugger adapter.
+RUN cd /root/.config/nvim/plugins/vimspector && python3 install_gadget.py --force-enable-node
+
+# Copy Neovim configuration files.
+COPY ./custom/ /root/.config/nvim/
 
 # Create TMP directory
 RUN mkdir -p /root/TMP

@@ -27,10 +27,17 @@ call plug#begin('/root/.config/nvim/plugins')
   Plug 'nvim-treesitter/nvim-treesitter'
   Plug 'neoclide/coc.nvim', { 'branch': 'release' }
   Plug 'puremourning/vimspector'
+  Plug 'wakatime/vim-wakatime'
+  Plug 'joshdick/onedark.vim'
+  Plug 'kyazdani42/nvim-web-devicons' " Recommended (for coloured icons)
+  " Plug 'ryanoasis/vim-devicons' Icons without colours
+  Plug 'akinsho/bufferline.nvim', { 'tag': 'v2.*' }
+  Plug 'dyng/ctrlsf.vim'
 call plug#end()
 
 " Extensions configuration
 source /root/.config/nvim/gruvbox/gruvbox.vim
+source /root/.config/nvim/onedark/onedark.vim
 source /root/.config/nvim/airline/airline.vim
 source /root/.config/nvim/nerdtree/nerdtree.vim
 source /root/.config/nvim/nerdtree/nerdtree-git.vim
@@ -43,3 +50,4 @@ source /root/.config/nvim/treesitter/treesitter.vim
 source /root/.config/nvim/coc/coc.vim
 source /root/.config/nvim/coc/extensions.vim
 source /root/.config/nvim/vimspector/vimspector.vim
+source /root/.config/nvim/bufferline/bufferline.vim
